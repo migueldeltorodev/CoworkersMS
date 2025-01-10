@@ -10,4 +10,23 @@
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.0"/>
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Common\Behaviors\" />
+      <Folder Include="Common\Configurations\" />
+      <Folder Include="Common\Exceptions\" />
+      <Folder Include="Common\Extensions\" />
+      <Folder Include="Common\Interfaces\" />
+      <Folder Include="Contracts\DTOs\" />
+      <Folder Include="Contracts\Requests\" />
+      <Folder Include="Contracts\Responses\" />
+      <Folder Include="Endpoints\" />
+      <Folder Include="Features\Bookings\" />
+      <Folder Include="Features\Rooms\" />
+      <Folder Include="Features\Users\" />
+      <Folder Include="Mappings\" />
+      <Folder Include="Persistence\Identity\JWT\" />
+      <Folder Include="Persistence\Identity\Services\" />
+      <Folder Include="Persistence\Repositories\" />
+    </ItemGroup>
+
 </Project>
