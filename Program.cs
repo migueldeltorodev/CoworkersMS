@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
     // Services
     builder.Services.AddOpenApi();
     builder.Services.AddDatabase(builder.Configuration);
+    builder.Services.AddAuth(builder.Configuration);
     builder.Services.AddRepositories();
     builder.Services.AddMediatR();
     builder.Services.AddValidators();
@@ -21,6 +22,9 @@ var app = builder.Build();
     }
 
     app.UseHttpsRedirection();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    
     app.Run();
 }
 
