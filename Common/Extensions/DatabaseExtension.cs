@@ -1,0 +1,28 @@
+using ManagementSystem.Api.Persistence;
+using Microsoft.EntityFrameworkCore;
+
+namespace ManagementSystem.Api.Common.Extensions;
+
+public static class DatabaseExtension
+{
+    public static IServiceCollection AddDatabase(
+        this IServiceCollection services,
+        IConfiguration configuration)
+    {
+        services.AddDbContext<AppDbContext>(options =>
+        {
+            options.UseSqlServer(
+                configuration.GetConnectionString("DefaultConnection"),
+                sqlOptions =>
+                {
+                    sqlOptions.EnableRetryOnFailure(
+                        maxRetryCount: 3,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: null);
+                    sqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.GetName().Name);
+                });
+        });
+
+        return services;
+    }
+}
