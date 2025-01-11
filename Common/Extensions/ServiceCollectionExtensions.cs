@@ -3,6 +3,7 @@ using FluentValidation;
 using ManagementSystem.Api.Common.Behaviors;
 using ManagementSystem.Api.Common.Interfaces;
 using ManagementSystem.Api.Persistence.Repositories;
+using ManagementSystem.Api.Persistence.Services;
 using MediatR;
 
 namespace ManagementSystem.Api.Common.Extensions;
@@ -15,7 +16,8 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<IRoomRepository, RoomRepository>();
         services.AddScoped<IBookingRepository, BookingRepository>();
-
+        services.AddScoped<IDateTimeProvider, DateTimeProvider>();
+        
         return services;
     }
 }
