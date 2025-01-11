@@ -1,6 +1,9 @@
 namespace ManagementSystem.Api.Domain.Enums;
 
-public class BookingStatus
+public enum BookingStatus
 {
-    
+    Created = 0,
+    Confirmed = 1,
+    Completed = 2,
+    Cancelled = 3
 }

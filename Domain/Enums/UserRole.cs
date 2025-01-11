@@ -1,6 +1,7 @@
 namespace ManagementSystem.Api.Domain.Enums;
 
-public class UserRole
+public enum UserRole
 {
-    
+    Standard = 0,
+    Administrator = 1
 }
