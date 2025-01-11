@@ -25,10 +25,10 @@ public class Booking : BaseEntity
     public Booking(User user, Room room, DateTime startTime, DateTime endTime)
     {
         if (startTime >= endTime)
-            throw new DomainException("Start time must be before end time");
+            throw new BookingTimeException("Start time must be before end time");
             
         if (startTime < DateTime.UtcNow)
-            throw new DomainException("Cannot create bookings in the past");
+            throw new BookingTimeException("Cannot create bookings in the past");
             
         UserId = user.Id;
         User = user;
@@ -52,10 +52,10 @@ public class Booking : BaseEntity
     public void Cancel(string reason)
     {
         if (Status != BookingStatus.Created && Status != BookingStatus.Confirmed)
-            throw new DomainException("Cannot cancel a booking that is not active");
+            throw new BookingTimeException("Cannot cancel a booking that is not active");
             
         if (StartTime <= DateTime.UtcNow)
-            throw new DomainException("Cannot cancel a booking that has already started");
+            throw new BookingTimeException("Cannot cancel a booking that has already started");
             
         Status = BookingStatus.Cancelled;
         UpdatedAt = DateTime.UtcNow;
@@ -65,7 +65,7 @@ public class Booking : BaseEntity
     public void Confirm()
     {
         if (Status != BookingStatus.Created)
-            throw new DomainException("Can only confirm bookings in Created status");
+            throw new BookingTimeException("Can only confirm bookings in Created status");
             
         Status = BookingStatus.Confirmed;
         UpdatedAt = DateTime.UtcNow;
