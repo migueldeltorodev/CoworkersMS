@@ -13,7 +13,6 @@
     <ItemGroup>
       <Folder Include="Common\Behaviors\" />
       <Folder Include="Common\Configurations\" />
-      <Folder Include="Common\Exceptions\" />
       <Folder Include="Common\Extensions\" />
       <Folder Include="Common\Interfaces\" />
       <Folder Include="Contracts\DTOs\" />
