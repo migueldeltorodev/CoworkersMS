@@ -7,10 +7,10 @@ namespace ManagementSystem.Api.Domain.Entities;
 public class Booking : BaseEntity
 {
     public Guid UserId { get; private set; }
-    public User User { get; private set; } = null!;
+    public User User { get; private set; } = default!;
     
     public Guid RoomId { get; private set; }
-    public Room Room { get; private set; } = null!;
+    public Room Room { get; private set; } = default!;
     
     public DateTime StartTime { get; private set; }
     public DateTime EndTime { get; private set; }
@@ -20,7 +20,7 @@ public class Booking : BaseEntity
     private readonly List<BookingHistory> _history = new();
     public IReadOnlyCollection<BookingHistory> History => _history.AsReadOnly();
     
-    private Booking() { } // For EF Core
+    private Booking() { } 
     
     public Booking(User user, Room room, DateTime startTime, DateTime endTime)
     {
