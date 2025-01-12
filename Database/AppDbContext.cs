@@ -1,7 +1,7 @@
 using ManagementSystem.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace ManagementSystem.Api.Persistence;
+namespace ManagementSystem.Api.Database;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
 {

@@ -2,7 +2,7 @@ using ManagementSystem.Api.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ManagementSystem.Api.Common.Configurations;
+namespace ManagementSystem.Api.Database.Configurations;
 
 public class RoomConfiguration : IEntityTypeConfiguration<Room>
 {
