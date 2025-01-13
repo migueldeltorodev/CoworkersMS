@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
         // Other services
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
+        services.AddHttpContextAccessor();
 
         return services;
     }
