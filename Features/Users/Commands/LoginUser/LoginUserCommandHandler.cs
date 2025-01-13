@@ -28,7 +28,9 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Result<
     {
         var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
 
-        if (user is null) return Result<AuthenticationResult>.Failure("Invalid credentials");
+        if (user is null)
+            return Result<AuthenticationResult>.Failure("Invalid credentials");
+            //throw new InvalidUserDataException();
 
         if (_passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password)
             is PasswordVerificationResult.Failed)
