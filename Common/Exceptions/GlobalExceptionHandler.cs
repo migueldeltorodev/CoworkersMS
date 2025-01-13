@@ -10,15 +10,15 @@ namespace ManagementSystem.Api.Common.Exceptions;
 
 public class GlobalExceptionHandler : IExceptionHandler
 {
-    private readonly ILogger<GlobalExceptionHandler> _logger;
     private readonly IHostEnvironment _environment;
+    private readonly ILogger<GlobalExceptionHandler> _logger;
 
     public GlobalExceptionHandler(ILogger<GlobalExceptionHandler> logger, IHostEnvironment environment)
     {
         _logger = logger;
         _environment = environment;
     }
-    
+
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
         Exception exception,
@@ -63,7 +63,7 @@ public class GlobalExceptionHandler : IExceptionHandler
                 problemDetails.Title = ex.Message;
                 problemDetails.Status = (int)HttpStatusCode.NotFound;
                 break;
-            
+
             case ValidationException ex:
                 _logger.LogWarning(ex, "Validation failed");
                 problemDetails.Title = "Validation failed";
@@ -79,10 +79,7 @@ public class GlobalExceptionHandler : IExceptionHandler
         }
 
         // Añadir información adicional en desarrollo
-        if (_environment.IsDevelopment())
-        {
-            problemDetails.Detail = exception.StackTrace;
-        }
+        if (_environment.IsDevelopment()) problemDetails.Detail = exception.StackTrace;
 
         httpContext.Response.ContentType = "application/problem+json";
         httpContext.Response.StatusCode = problemDetails.Status ?? (int)HttpStatusCode.InternalServerError;

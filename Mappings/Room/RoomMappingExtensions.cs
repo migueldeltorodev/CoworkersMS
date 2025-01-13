@@ -17,7 +17,7 @@ public static class RoomMappingExtensions
             Description = request.Description
         };
     }
-    
+
     public static GetRoomsQuery ToQuery(this GetRoomsRequest request)
     {
         return new GetRoomsQuery

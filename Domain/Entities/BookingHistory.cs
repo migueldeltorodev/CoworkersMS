@@ -4,12 +4,10 @@ namespace ManagementSystem.Api.Domain.Entities;
 
 public class BookingHistory : BaseEntity
 {
-    public Guid BookingId { get; private set; }
-    public Booking Booking { get; private set; } = null!;
-    public string Description { get; private set; } = null!;
-    
-    private BookingHistory() { } 
-    
+    private BookingHistory()
+    {
+    }
+
     public BookingHistory(Booking booking, string description)
     {
         BookingId = booking.Id;
@@ -17,4 +15,8 @@ public class BookingHistory : BaseEntity
         Description = description;
         CreatedAt = DateTime.UtcNow;
     }
+
+    public Guid BookingId { get; private set; }
+    public Booking Booking { get; private set; } = null!;
+    public string Description { get; private set; } = null!;
 }

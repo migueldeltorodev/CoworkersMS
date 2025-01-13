@@ -9,9 +9,9 @@ namespace ManagementSystem.Api.Features.Bookings.Commands.CreateBooking;
 public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand, Result<Guid>>
 {
     private readonly IBookingRepository _bookingRepository;
-    private readonly IUserRepository _userRepository;
     private readonly IRoomRepository _roomRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserRepository _userRepository;
 
     public CreateBookingCommandHandler(
         IBookingRepository bookingRepository,
@@ -36,12 +36,8 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
         var hasOverlap = await _bookingRepository.HasOverlappingBookingAsync(
             request.RoomId, request.StartTime, request.EndTime, null, cancellationToken);
 
-        if (hasOverlap)
-        {
-            return Result<Guid>.Failure("Room is already booked for the selected time period");
-            // throw new RoomAlreadyBookedException();
-        }
-
+        if (hasOverlap) return Result<Guid>.Failure("Room is already booked for the selected time period");
+        // throw new RoomAlreadyBookedException();
         var booking = new Booking(user, room, request.StartTime, request.EndTime);
         await _bookingRepository.AddAsync(booking, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

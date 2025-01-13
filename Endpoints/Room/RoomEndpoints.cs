@@ -30,7 +30,7 @@ public static class RoomEndpoints
             .WithName("CreateRoom")
             .WithDescription("Create a new room")
             .RequireAuthorization(policy => policy.RequireRole("Administrator"));
-        
+
         group.MapGet("/", async Task<Results<Ok<IReadOnlyList<RoomResponse>>, BadRequest<string>>> (
                 [AsParameters] GetRoomsRequest request,
                 ISender mediator,

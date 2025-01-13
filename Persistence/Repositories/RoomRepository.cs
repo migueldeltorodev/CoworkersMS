@@ -27,26 +27,21 @@ public class RoomRepository : BaseRepository<Room>, IRoomRepository
                  (b.StartTime < endTime && b.EndTime >= endTime) ||
                  (b.StartTime >= startTime && b.EndTime <= endTime))));
 
-        if (minCapacity.HasValue)
-        {
-            query = query.Where(r => r.Capacity >= minCapacity.Value);
-        }
+        if (minCapacity.HasValue) query = query.Where(r => r.Capacity >= minCapacity.Value);
 
         if (!string.IsNullOrWhiteSpace(location))
-        {
             query = query.Where(r => r.Location.ToLower().Contains(location.ToLower()));
-        }
 
         return await query.ToListAsync(cancellationToken);
     }
-    
+
     public async Task<bool> ExistsByNameAsync(
-        string name, 
+        string name,
         CancellationToken cancellationToken)
     {
         return await _dbSet.AnyAsync(r => r.Name == name, cancellationToken);
     }
-    
+
     public async Task<IReadOnlyList<Room>> GetRoomsAsync(
         string? searchTerm,
         string? location,
@@ -60,30 +55,18 @@ public class RoomRepository : BaseRepository<Room>, IRoomRepository
         if (!string.IsNullOrWhiteSpace(searchTerm))
         {
             searchTerm = searchTerm.ToLower();
-            query = query.Where(r => 
-                r.Name.ToLower().Contains(searchTerm) || 
+            query = query.Where(r =>
+                r.Name.ToLower().Contains(searchTerm) ||
                 (r.Description != null && r.Description.ToLower().Contains(searchTerm)));
         }
 
-        if (!string.IsNullOrWhiteSpace(location))
-        {
-            query = query.Where(r => r.Location == location);
-        }
+        if (!string.IsNullOrWhiteSpace(location)) query = query.Where(r => r.Location == location);
 
-        if (minCapacity.HasValue)
-        {
-            query = query.Where(r => r.Capacity >= minCapacity.Value);
-        }
+        if (minCapacity.HasValue) query = query.Where(r => r.Capacity >= minCapacity.Value);
 
-        if (maxHourlyRate.HasValue)
-        {
-            query = query.Where(r => r.HourlyRate <= maxHourlyRate.Value);
-        }
+        if (maxHourlyRate.HasValue) query = query.Where(r => r.HourlyRate <= maxHourlyRate.Value);
 
-        if (isActive.HasValue)
-        {
-            query = query.Where(r => r.IsActive == isActive.Value);
-        }
+        if (isActive.HasValue) query = query.Where(r => r.IsActive == isActive.Value);
 
         return await query
             .OrderBy(r => r.Name)

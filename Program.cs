@@ -15,20 +15,21 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddRepositories();
     builder.Services.AddMediatR();
     builder.Services.AddValidators();
-    
+
     // Mapper profiles
     builder.Services.AddAutoMapper(typeof(Program));
-    
+
     // Add Swagger services
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(c =>
     {
-        c.SwaggerDoc("v1", new OpenApiInfo { 
-            Title = "ManagementSystem API", 
-            Version = "v1" 
+        c.SwaggerDoc("v1", new OpenApiInfo
+        {
+            Title = "ManagementSystem API",
+            Version = "v1"
         });
     });
-    
+
     // Cors
     builder.Services.AddCors(options =>
     {
@@ -45,20 +46,14 @@ var app = builder.Build();
 {
     if (app.Environment.IsDevelopment())
     {
-        app.UseSwagger(c =>
-        {
-            c.SerializeAsV2 = false;
-        });
-        app.UseSwaggerUI(c =>
-        {
-            c.SwaggerEndpoint("/swagger/v1/swagger.json", "ManagementSystem API V1");
-        });
+        app.UseSwagger(c => { c.SerializeAsV2 = false; });
+        app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "ManagementSystem API V1"); });
     }
-    
+
     app.UseSerilogRequestLogging();
     app.UseCors("AllowAll");
     app.UseHttpsRedirection();
-    
+
     app.UseAuthentication();
     app.UseAuthorization();
 
@@ -67,7 +62,6 @@ var app = builder.Build();
     app.MapBookingEndpoints();
     app.MapUserEndpoints();
     app.MapRoomEndpoints();
-    
+
     app.Run();
 }
-

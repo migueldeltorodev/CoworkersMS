@@ -9,31 +9,39 @@ namespace ManagementSystem.Api.Mappings.User;
 public static class UserContractExtensions
 {
     public static RegisterUserCommand ToCommand(this RegisterUserRequest request)
-        => new()
+    {
+        return new RegisterUserCommand
         {
             Email = request.Email,
             Password = request.Password,
             FirstName = request.FirstName,
             LastName = request.LastName
         };
+    }
 
     public static LoginUserCommand ToCommand(this LoginUserRequest request)
-        => new()
+    {
+        return new LoginUserCommand
         {
             Email = request.Email,
             Password = request.Password
         };
+    }
 
-    public static ChangeUserRoleCommand ToCommand(this ChangeUserRoleRequest request, Guid userId, Guid requestedByUserId)
-        => new()
+    public static ChangeUserRoleCommand ToCommand(this ChangeUserRoleRequest request, Guid userId,
+        Guid requestedByUserId)
+    {
+        return new ChangeUserRoleCommand
         {
             UserId = userId,
             NewRole = request.NewRole,
             RequestedByUserId = requestedByUserId
         };
+    }
 
     public static AuthenticationResponse ToResponse(this AuthenticationResult result, Domain.Entities.User user)
-        => new()
+    {
+        return new AuthenticationResponse
         {
             Token = result.Token,
             ExpiresAt = result.ExpiresAt,
@@ -42,9 +50,11 @@ public static class UserContractExtensions
             LastName = user.LastName,
             Role = user.Role.ToString()
         };
+    }
 
     public static UserResponse ToResponse(this Domain.Entities.User user)
-        => new()
+    {
+        return new UserResponse
         {
             Id = user.Id,
             Email = user.Email,
@@ -55,4 +65,5 @@ public static class UserContractExtensions
             CreatedAt = user.CreatedAt,
             UpdatedAt = user.UpdatedAt
         };
+    }
 }

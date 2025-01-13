@@ -8,8 +8,8 @@ namespace ManagementSystem.Api.Features.Rooms.Queries.GetRooms;
 
 public class GetRoomsQueryHandler : IRequestHandler<GetRoomsQuery, Result<IReadOnlyList<RoomResponse>>>
 {
-    private readonly IRoomRepository _roomRepository;
     private readonly IMapper _mapper;
+    private readonly IRoomRepository _roomRepository;
 
     public GetRoomsQueryHandler(IRoomRepository roomRepository, IMapper mapper)
     {

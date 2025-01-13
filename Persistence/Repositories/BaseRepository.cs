@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ManagementSystem.Api.Persistence.Repositories;
 
-public abstract class BaseRepository<TEntity> : IRepository<TEntity> 
+public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     where TEntity : BaseEntity
 {
     protected readonly AppDbContext _context;
