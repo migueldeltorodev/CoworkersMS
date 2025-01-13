@@ -9,15 +9,15 @@ public static class LogginExtension
         Log.Logger = new LoggerConfiguration()
             .WriteTo.Console()
             .CreateLogger();
-        
+
         Log.Information("starting server.");
-        
+
         hostBuilder.UseSerilog((context, loggerConfiguration) =>
         {
             loggerConfiguration.WriteTo.Console();
             loggerConfiguration.ReadFrom.Configuration(context.Configuration);
         });
-        
+
         return services;
     }
 }

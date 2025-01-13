@@ -21,10 +21,7 @@ public class BookingRepository : BaseRepository<Booking>, IBookingRepository
             .Include(b => b.Room)
             .Where(b => b.UserId == userId);
 
-        if (fromDate.HasValue)
-        {
-            query = query.Where(b => b.StartTime >= fromDate.Value);
-        }
+        if (fromDate.HasValue) query = query.Where(b => b.StartTime >= fromDate.Value);
 
         return await query
             .OrderByDescending(b => b.StartTime)
@@ -45,10 +42,7 @@ public class BookingRepository : BaseRepository<Booking>, IBookingRepository
                 (b.StartTime < endTime && b.EndTime >= endTime) ||
                 (b.StartTime >= startTime && b.EndTime <= endTime));
 
-        if (excludeBookingId.HasValue)
-        {
-            query = query.Where(b => b.Id != excludeBookingId.Value);
-        }
+        if (excludeBookingId.HasValue) query = query.Where(b => b.Id != excludeBookingId.Value);
 
         return await query.AnyAsync(cancellationToken);
     }

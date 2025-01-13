@@ -1,3 +1,4 @@
+using System.Text.Json;
 using MediatR;
 
 namespace ManagementSystem.Api.Common.Behaviors;
@@ -17,12 +18,22 @@ public class LoggingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        var requestName = typeof(TRequest).Name;
-        _logger.LogInformation("Handling {RequestName}", requestName);
+        var correlationId = Guid.NewGuid();
 
+        // Request Logging
+        // Serialize the request
+        var requestJson = JsonSerializer.Serialize(request);
+        // Log the serialized request
+        _logger.LogInformation("Handling request {CorrelationID}: {Request}", correlationId, requestJson);
+
+        // Response logging
         var response = await next();
+        // Serialize the request
+        var responseJson = JsonSerializer.Serialize(response);
+        // Log the serialized request
+        _logger.LogInformation("Response for {Correlation}: {Response}", correlationId, responseJson);
 
-        _logger.LogInformation("Handled {RequestName}", requestName);
+        // Return response
         return response;
     }
 }

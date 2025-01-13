@@ -5,18 +5,12 @@ namespace ManagementSystem.Api.Domain.Entities;
 
 public class User : BaseEntity
 {
-    public string Email { get; private set; } = null!;
-    public string PasswordHash { get; private set; } = null!;
-    public string FirstName { get; private set; } = null!;
-    public string LastName { get; private set; } = null!;
-    public UserRole Role { get; private set; }
-    public bool IsActive { get; private set; }
-    
     private readonly List<Booking> _bookings = new();
-    public IReadOnlyCollection<Booking> Bookings => _bookings.AsReadOnly();
-    
-    private User() { } 
-    
+
+    private User()
+    {
+    }
+
     public User(string email, string firstName, string lastName, string passwordHash)
     {
         Email = email;
@@ -26,14 +20,22 @@ public class User : BaseEntity
         Role = UserRole.Standard;
         IsActive = true;
     }
-    
+
+    public string Email { get; private set; } = null!;
+    public string PasswordHash { get; private set; } = null!;
+    public string FirstName { get; private set; } = null!;
+    public string LastName { get; private set; } = null!;
+    public UserRole Role { get; private set; }
+    public bool IsActive { get; private set; }
+    public IReadOnlyCollection<Booking> Bookings => _bookings.AsReadOnly();
+
     public void UpdatePersonalInfo(string firstName, string lastName)
     {
         FirstName = firstName;
         LastName = lastName;
         UpdatedAt = DateTime.UtcNow;
     }
-    
+
     public void SetRole(UserRole role)
     {
         Role = role;

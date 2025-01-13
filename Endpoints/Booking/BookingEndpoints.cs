@@ -1,4 +1,3 @@
-using System.Security.Claims;
 using ManagementSystem.Api.Common.Exceptions;
 using ManagementSystem.Api.Contracts.DTOs;
 using ManagementSystem.Api.Contracts.Requests.Bookings;

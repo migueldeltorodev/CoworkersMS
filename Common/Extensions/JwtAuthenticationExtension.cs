@@ -19,28 +19,28 @@ public static class JwtAuthenticationExtension
     {
         var jwtSettings = new JwtSettings();
         configuration.Bind(JwtSettings.SectionName, jwtSettings);
-        
-        services.AddSingleton(Options.Create(jwtSettings));  
-        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();  
+
+        services.AddSingleton(Options.Create(jwtSettings));
+        services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
         services.AddSingleton<IPasswordHasher<User>, PasswordHasher<User>>();
-        
-        services.AddAuthentication(options => 
+
+        services.AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = "JWT_OR_COOKIE";
                 options.DefaultChallengeScheme = "JWT_OR_COOKIE";
             })
             .AddJwtBearer(options =>
             {
-                options.TokenValidationParameters = new TokenValidationParameters()  
-                {  
-                    ValidateIssuer = true,  
-                    ValidateAudience = true,  
-                    ValidateLifetime = true,  
-                    ValidateIssuerSigningKey = true,  
-                    ValidIssuer = jwtSettings.Issuer,  
-                    ValidAudience = jwtSettings.Audience,  
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtSettings.Issuer,
+                    ValidAudience = jwtSettings.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(
-                        Encoding.UTF8.GetBytes(jwtSettings.Secret))  
+                        Encoding.UTF8.GetBytes(jwtSettings.Secret))
                 };
             })
             .AddCookie(options =>
@@ -58,13 +58,13 @@ public static class JwtAuthenticationExtension
                     string authorization = context.Request.Headers[HeaderNames.Authorization];
                     if (!string.IsNullOrEmpty(authorization) && authorization.StartsWith("Bearer "))
                         return JwtBearerDefaults.AuthenticationScheme;
-                
+
                     return CookieAuthenticationDefaults.AuthenticationScheme;
                 };
             });
 
         services.AddAuthorization();
-        
-        return services;  
+
+        return services;
     }
 }

@@ -8,7 +8,7 @@ public static class ContextUtils
     {
         var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
                           ?? throw new UnauthorizedAccessException("User ID not found in token");
-        
+
         return Guid.Parse(userIdClaim);
     }
 }

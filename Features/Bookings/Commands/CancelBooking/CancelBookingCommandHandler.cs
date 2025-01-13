@@ -22,10 +22,7 @@ public class CancelBookingCommandHandler : IRequestHandler<CancelBookingCommand,
         var booking = await _bookingRepository.GetByIdAsync(request.BookingId, cancellationToken)
                       ?? throw new NotFoundException(nameof(Booking), request.BookingId);
 
-        if (booking.UserId != request.UserId)
-        {
-            return Result<Unit>.Failure("You can only cancel your own bookings");
-        }
+        if (booking.UserId != request.UserId) return Result<Unit>.Failure("You can only cancel your own bookings");
 
         booking.Cancel(request.Reason);
         await _unitOfWork.SaveChangesAsync(cancellationToken);

@@ -8,9 +8,9 @@ namespace ManagementSystem.Api.Features.Users.Commands.LoginUser;
 
 public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Result<AuthenticationResult>>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IPasswordHasher<User> _passwordHasher;
     private readonly IJwtTokenGenerator _jwtTokenGenerator;
+    private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IUserRepository _userRepository;
 
     public LoginUserCommandHandler(
         IUserRepository userRepository,
@@ -27,17 +27,14 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommand, Result<
         CancellationToken cancellationToken)
     {
         var user = await _userRepository.GetByEmailAsync(request.Email, cancellationToken);
-        
-        if (user is null)
-        {
-            return Result<AuthenticationResult>.Failure("Invalid credentials");
-        }
 
-        if (_passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password) 
-            is PasswordVerificationResult.Failed)
-        {
+        if (user is null)
             return Result<AuthenticationResult>.Failure("Invalid credentials");
-        }
+            //throw new InvalidUserDataException();
+
+        if (_passwordHasher.VerifyHashedPassword(user, user.PasswordHash, request.Password)
+            is PasswordVerificationResult.Failed)
+            return Result<AuthenticationResult>.Failure("Invalid credentials");
 
         var token = _jwtTokenGenerator.GenerateToken(user);
         var expiresAt = DateTime.UtcNow.AddHours(1);

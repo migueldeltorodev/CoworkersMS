@@ -8,7 +8,7 @@ public interface IBookingRepository : IRepository<Booking>
         Guid userId,
         DateTime? fromDate = null,
         CancellationToken cancellationToken = default);
-        
+
     Task<bool> HasOverlappingBookingAsync(
         Guid roomId,
         DateTime startTime,
