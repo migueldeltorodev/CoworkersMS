@@ -16,9 +16,9 @@ public static class DatabaseExtension
                 sqlOptions =>
                 {
                     sqlOptions.EnableRetryOnFailure(
-                        maxRetryCount: 3,
-                        maxRetryDelay: TimeSpan.FromSeconds(30),
-                        errorNumbersToAdd: null);
+                        3,
+                        TimeSpan.FromSeconds(30),
+                        null);
                     sqlOptions.MigrationsAssembly(typeof(AppDbContext).Assembly.GetName().Name);
                 });
         });

@@ -4,7 +4,6 @@ namespace ManagementSystem.Api.Common.Exceptions;
 
 public abstract class BaseException : Exception
 {
-    public HttpStatusCode StatusCode { get; }
     protected BaseException(
         string message,
         HttpStatusCode statusCode = HttpStatusCode.InternalServerError)
@@ -12,4 +11,6 @@ public abstract class BaseException : Exception
     {
         StatusCode = statusCode;
     }
+
+    public HttpStatusCode StatusCode { get; }
 }

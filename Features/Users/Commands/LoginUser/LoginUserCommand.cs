@@ -1,6 +1,5 @@
 using ManagementSystem.Api.Common.Results;
 using MediatR;
-using Microsoft.Identity.Client;
 
 namespace ManagementSystem.Api.Features.Users.Commands.LoginUser;
 

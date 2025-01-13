@@ -9,8 +9,8 @@ namespace ManagementSystem.Api.Features.Users.Commands.ChangeUserRole;
 
 public class ChangeUserRoleCommandHandler : IRequestHandler<ChangeUserRoleCommand, Result<Unit>>
 {
-    private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IUserRepository _userRepository;
 
     public ChangeUserRoleCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
     {
@@ -24,9 +24,7 @@ public class ChangeUserRoleCommandHandler : IRequestHandler<ChangeUserRoleComman
                              ?? throw new NotFoundException(nameof(User), request.RequestedByUserId);
 
         if (requestingUser.Role != UserRole.Administrator)
-        {
             return Result<Unit>.Failure("Only administrators can change user roles");
-        }
 
         var userToUpdate = await _userRepository.GetByIdAsync(request.UserId, cancellationToken)
                            ?? throw new NotFoundException(nameof(User), request.UserId);

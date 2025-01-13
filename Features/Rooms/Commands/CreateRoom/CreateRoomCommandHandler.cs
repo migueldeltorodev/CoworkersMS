@@ -24,9 +24,7 @@ public class CreateRoomCommandHandler : IRequestHandler<CreateRoomCommand, Resul
     {
         // Validate if the room already exists?
         if (await _roomRepository.ExistsByNameAsync(command.Name, cancellationToken))
-        {
             return Result<Guid>.Failure("A room with this name already exists");
-        }
 
         var room = new Room(
             command.Name,

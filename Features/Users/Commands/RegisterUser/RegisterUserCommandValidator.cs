@@ -7,9 +7,9 @@ public class RegisterUserCommandValidator : AbstractValidator<RegisterUserComman
     public RegisterUserCommandValidator()
     {
         RuleFor(x => x.Email)
-            .NotEmpty()
-            .EmailAddress()
-            .MaximumLength(256);
+            .NotEmpty().WithMessage("Email is required")
+            .EmailAddress().WithMessage("Email is invalid")
+            .MaximumLength(50).WithMessage("Maximum length 50 characters");
 
         RuleFor(x => x.Password)
             .NotEmpty()

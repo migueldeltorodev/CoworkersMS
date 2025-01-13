@@ -4,18 +4,12 @@ namespace ManagementSystem.Api.Domain.Entities;
 
 public class Room : BaseEntity
 {
-    public string Name { get; private set; } = null!;
-    public string Location { get; private set; } = null!;
-    public int Capacity { get; private set; }
-    public string? Description { get; private set; }
-    public bool IsActive { get; private set; }
-    public decimal HourlyRate { get; private set; }
-    
     private readonly List<Booking> _bookings = new();
-    public IReadOnlyCollection<Booking> Bookings => _bookings.AsReadOnly();
-    
-    private Room() { }
-    
+
+    private Room()
+    {
+    }
+
     public Room(string name, string location, int capacity, decimal hourlyRate, string? description = null)
     {
         Name = name;
@@ -25,7 +19,15 @@ public class Room : BaseEntity
         Description = description;
         IsActive = true;
     }
-    
+
+    public string Name { get; private set; } = null!;
+    public string Location { get; private set; } = null!;
+    public int Capacity { get; private set; }
+    public string? Description { get; private set; }
+    public bool IsActive { get; private set; }
+    public decimal HourlyRate { get; private set; }
+    public IReadOnlyCollection<Booking> Bookings => _bookings.AsReadOnly();
+
     public void Update(string name, string location, int capacity, decimal hourlyRate, string? description)
     {
         Name = name;
@@ -35,7 +37,7 @@ public class Room : BaseEntity
         Description = description;
         UpdatedAt = DateTime.UtcNow;
     }
-    
+
     public void Deactivate()
     {
         IsActive = false;

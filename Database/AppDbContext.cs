@@ -10,16 +10,15 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
     public DbSet<Room> Rooms => Set<Room>();
     public DbSet<Booking> Bookings => Set<Booking>();
     public DbSet<BookingHistory> BookingHistories => Set<BookingHistory>();
-    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
-    
+
     public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
     {
         foreach (var entry in ChangeTracker.Entries<BaseEntity>())
-        {
             switch (entry.State)
             {
                 case EntityState.Added:
@@ -31,7 +30,6 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                     entry.Entity.UpdatedBy = GetCurrentUser();
                     break;
             }
-        }
 
         return base.SaveChangesAsync(cancellationToken);
     }
@@ -41,5 +39,4 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         // TODO: Implement with IHttpContextAccessor
         return "system";
     }
-    
 }
