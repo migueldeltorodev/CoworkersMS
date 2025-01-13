@@ -1,4 +1,4 @@
-using ManagementSystem.Api.Persistence;
+using ManagementSystem.Api.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace ManagementSystem.Api.Common.Extensions;
