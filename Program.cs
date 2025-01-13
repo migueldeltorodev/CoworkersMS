@@ -1,5 +1,6 @@
 using ManagementSystem.Api.Common.Extensions;
 using ManagementSystem.Api.Endpoints.Booking;
+using ManagementSystem.Api.Endpoints.Room;
 using ManagementSystem.Api.Endpoints.User;
 using Microsoft.OpenApi.Models;
 
@@ -59,6 +60,7 @@ var app = builder.Build();
 
     app.MapBookingEndpoints();
     app.MapUserEndpoints();
+    app.MapRoomEndpoints();
     
     app.Run();
 }
