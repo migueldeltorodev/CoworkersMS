@@ -101,7 +101,7 @@ public static class UserEndpoints
             IUserRepository userRepository,
             CancellationToken cancellationToken) =>
         {
-            var userId = GetUserIdFromContext(context);
+            var userId = context.GetUserIdFromContext();
             var user = await userRepository.GetByIdAsync(userId, cancellationToken);
 
             return user is null
@@ -123,7 +123,7 @@ public static class UserEndpoints
         {
             try
             {
-                var requestedByUserId = GetUserIdFromContext(context);
+                var requestedByUserId = context.GetUserIdFromContext();
                 var command = request.ToCommand(id, requestedByUserId);
                 var result = await mediator.Send(command, cancellationToken);
 
@@ -143,13 +143,5 @@ public static class UserEndpoints
         .RequireAuthorization(policy => policy.RequireRole("Administrator"));
 
         return app;
-    }
-
-    private static Guid GetUserIdFromContext(HttpContext context)
-    {
-        var userIdClaim = context.User.FindFirst(ClaimTypes.NameIdentifier)?.Value
-            ?? throw new UnauthorizedAccessException("User ID not found in token");
-        
-        return Guid.Parse(userIdClaim);
     }
 }
