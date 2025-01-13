@@ -1,4 +1,5 @@
 using ManagementSystem.Api.Common.Interfaces;
+using ManagementSystem.Api.Database;
 using ManagementSystem.Api.Domain.Entities;
 using ManagementSystem.Api.Domain.Enums;
 using Microsoft.EntityFrameworkCore;

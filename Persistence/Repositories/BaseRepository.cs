@@ -1,5 +1,6 @@
 using ManagementSystem.Api.Common.Domain;
 using ManagementSystem.Api.Common.Interfaces;
+using ManagementSystem.Api.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace ManagementSystem.Api.Persistence.Repositories;
