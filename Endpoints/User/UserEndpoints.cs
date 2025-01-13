@@ -5,6 +5,8 @@ using ManagementSystem.Api.Contracts.Requests.Users;
 using ManagementSystem.Api.Contracts.Responses;
 using ManagementSystem.Api.Mappings.User;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +44,7 @@ public static class UserEndpoints
             [FromBody] LoginUserRequest request,
             ISender mediator,
             IUserRepository userRepository,
+            HttpContext httpContext,
             CancellationToken cancellationToken) =>
         {
             var command = request.ToCommand();
@@ -51,11 +54,46 @@ public static class UserEndpoints
                 return TypedResults.BadRequest(result.Error);
 
             var user = await userRepository.GetByEmailAsync(request.Email, cancellationToken);
-            return TypedResults.Ok(result.Value?.ToResponse(user!));
+            
+            // Set the authentication cookie
+            var claims = new List<Claim>
+            {
+                new(ClaimTypes.NameIdentifier, user!.Id.ToString()),
+                new(ClaimTypes.Email, user.Email),
+                new(ClaimTypes.GivenName, user.FirstName),
+                new(ClaimTypes.Role, user.Role.ToString())
+            };
+
+            var claimsIdentity = new ClaimsIdentity(
+                claims, 
+                CookieAuthenticationDefaults.AuthenticationScheme);
+    
+            var authProperties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                ExpiresUtc = DateTimeOffset.UtcNow.AddHours(1),
+                IsPersistent = true,
+            };
+
+            await httpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                new ClaimsPrincipal(claimsIdentity),
+                authProperties);
+
+            return TypedResults.Ok(result.Value?.ToResponse(user));
         })
         .WithName("LoginUser")
         .WithDescription("Authenticate a user")
         .AllowAnonymous();
+        
+        group.MapPost("/logout", async Task<IResult> (HttpContext httpContext) =>
+        {
+            await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return Results.Ok();
+        })
+        .WithName("LogoutUser")
+        .WithDescription("Logout the current user")
+        .RequireAuthorization();
 
         // Protected endpoints (require authentication)
         group.MapGet("/me", async Task<Results<Ok<UserResponse>, NotFound>> (
