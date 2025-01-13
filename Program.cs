@@ -58,7 +58,7 @@ var app = builder.Build();
     app.UseAuthorization();
 
     app.UseExceptionHandler();
-
+    
     app.MapBookingEndpoints();
     app.MapUserEndpoints();
     app.MapRoomEndpoints();

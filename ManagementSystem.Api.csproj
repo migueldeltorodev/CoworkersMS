@@ -8,6 +8,7 @@
 
     <ItemGroup>
         <PackageReference Include="AutoMapper" Version="13.0.1" />
+        <PackageReference Include="Delta" Version="6.0.0" />
         <PackageReference Include="FluentValidation" Version="11.11.0" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
         <PackageReference Include="MediatR" Version="12.4.1" />
@@ -25,6 +26,14 @@
         <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="7.2.0" />
         <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="ManagementSystem.UnitTests\obj\ManagementSystem.UnitTests.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="ManagementSystem.UnitTests\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="ManagementSystem.UnitTests\obj\project.packagespec.json" />
+      <_ContentIncludedByDefault Remove="tests\ManagementSystem.UnitTests\obj\ManagementSystem.UnitTests.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="tests\ManagementSystem.UnitTests\obj\project.assets.json" />
     </ItemGroup>
 
 </Project>
