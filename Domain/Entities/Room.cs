@@ -2,7 +2,7 @@ using ManagementSystem.Api.Common.Domain;
 
 namespace ManagementSystem.Api.Domain.Entities;
 
-public class Room : BaseEntity
+public class Room : BaseEntity, IHasConcurrencyToken
 {
     private readonly List<Booking> _bookings = new();
 
@@ -43,4 +43,6 @@ public class Room : BaseEntity
         IsActive = false;
         UpdatedAt = DateTime.UtcNow;
     }
+
+    public byte[] RowVersion { get; set; } = default!;
 }

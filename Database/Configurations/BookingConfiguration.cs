@@ -39,5 +39,7 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .WithOne(x => x.Booking)
             .HasForeignKey(x => x.BookingId)
             .OnDelete(DeleteBehavior.Cascade);
+        
+        builder.ConfigureRowVersion();
     }
 }

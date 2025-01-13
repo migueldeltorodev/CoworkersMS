@@ -4,7 +4,7 @@ using ManagementSystem.Api.Exceptions.Booking;
 
 namespace ManagementSystem.Api.Domain.Entities;
 
-public class Booking : BaseEntity
+public class Booking : BaseEntity, IHasConcurrencyToken
 {
     private readonly List<BookingHistory> _history = new();
 
@@ -79,4 +79,6 @@ public class Booking : BaseEntity
     {
         _history.Add(new BookingHistory(this, description));
     }
+
+    public byte[] RowVersion { get; set; } = default!;
 }

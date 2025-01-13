@@ -29,5 +29,7 @@ public class RoomConfiguration : IEntityTypeConfiguration<Room>
             .WithOne(x => x.Room)
             .HasForeignKey(x => x.RoomId)
             .OnDelete(DeleteBehavior.Restrict);
+        
+        builder.ConfigureRowVersion();
     }
 }
