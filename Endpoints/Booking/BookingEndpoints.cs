@@ -1,3 +1,4 @@
+using Delta;
 using ManagementSystem.Api.Common.Exceptions;
 using ManagementSystem.Api.Contracts.DTOs;
 using ManagementSystem.Api.Contracts.Requests.Bookings;
@@ -15,7 +16,8 @@ public static class BookingEndpoints
     {
         var group = app.MapGroup("/api/bookings")
             .WithTags("Bookings")
-            .WithOpenApi();
+            .WithOpenApi()
+            .UseDelta();
 
         group.MapPost("/", async Task<Results<Created<Guid>, BadRequest<string>>> (
                 [FromBody] CreateBookingRequest request,

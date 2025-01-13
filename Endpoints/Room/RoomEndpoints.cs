@@ -1,3 +1,4 @@
+using Delta;
 using ManagementSystem.Api.Contracts.Requests.Rooms;
 using ManagementSystem.Api.Contracts.Responses;
 using ManagementSystem.Api.Mappings.Room;
@@ -12,7 +13,8 @@ public static class RoomEndpoints
     public static void MapRoomEndpoints(this IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("/api/rooms")
-            .WithTags("Rooms");
+            .WithTags("Rooms")
+            .UseDelta();
 
         group.MapPost("/", async Task<Results<Created<Guid>, BadRequest<string>>> (
                 [FromBody] CreateRoomRequest request,
