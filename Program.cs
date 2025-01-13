@@ -1,5 +1,6 @@
 using ManagementSystem.Api.Common.Extensions;
 using ManagementSystem.Api.Endpoints.Booking;
+using ManagementSystem.Api.Endpoints.User;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,7 +20,21 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen(c =>
     {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "ManagementSystem API", Version = "v1" });
+        c.SwaggerDoc("v1", new OpenApiInfo { 
+            Title = "ManagementSystem API", 
+            Version = "v1" 
+        });
+    });
+    
+    // Cors
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowAll", policy =>
+        {
+            policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+        });
     });
 }
 
@@ -27,20 +42,23 @@ var app = builder.Build();
 {
     if (app.Environment.IsDevelopment())
     {
-        app.MapOpenApi();
-        // Enable middleware to serve generated Swagger as a JSON endpoint.
-        app.UseSwagger();
-        // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-        // specifying the Swagger JSON endpoint.
+        app.UseSwagger(c =>
+        {
+            c.SerializeAsV2 = false;
+        });
         app.UseSwaggerUI(c =>
         {
             c.SwaggerEndpoint("/swagger/v1/swagger.json", "ManagementSystem API V1");
         });
     }
-
+    
+    app.UseCors("AllowAll");
     app.UseHttpsRedirection();
     app.UseAuthentication();
     app.UseAuthorization();
+
+    app.MapBookingEndpoints();
+    app.MapUserEndpoints();
     
     app.Run();
 }
