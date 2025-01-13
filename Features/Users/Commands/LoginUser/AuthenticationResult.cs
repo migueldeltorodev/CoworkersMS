@@ -1,4 +1,4 @@
-namespace ManagementSystem.Api.Contracts.Responses;
+namespace ManagementSystem.Api.Features.Users.Commands.LoginUser;
 
 public record AuthenticationResult
 {

@@ -1,6 +1,5 @@
 using ManagementSystem.Api.Common.Interfaces;
 using ManagementSystem.Api.Common.Results;
-using ManagementSystem.Api.Contracts.Responses;
 using ManagementSystem.Api.Domain.Entities;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
