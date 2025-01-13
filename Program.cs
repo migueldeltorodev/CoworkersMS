@@ -58,8 +58,11 @@ var app = builder.Build();
     app.UseSerilogRequestLogging();
     app.UseCors("AllowAll");
     app.UseHttpsRedirection();
+    
     app.UseAuthentication();
     app.UseAuthorization();
+
+    app.UseExceptionHandler();
 
     app.MapBookingEndpoints();
     app.MapUserEndpoints();

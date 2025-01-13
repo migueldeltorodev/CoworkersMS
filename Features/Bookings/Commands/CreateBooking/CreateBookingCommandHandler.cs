@@ -39,6 +39,7 @@ public class CreateBookingCommandHandler : IRequestHandler<CreateBookingCommand,
         if (hasOverlap)
         {
             return Result<Guid>.Failure("Room is already booked for the selected time period");
+            // throw new RoomAlreadyBookedException();
         }
 
         var booking = new Booking(user, room, request.StartTime, request.EndTime);
