@@ -1,14 +1,13 @@
 using AutoMapper;
 using ManagementSystem.Api.Contracts.DTOs;
-using ManagementSystem.Api.Domain.Entities;
 
-namespace ManagementSystem.Api.Mappings;
+namespace ManagementSystem.Api.Mappings.Booking;
 
 public class BookingProfile : Profile
 {
     public BookingProfile()
     {
-        CreateMap<Booking, BookingDto>()
+        CreateMap<Domain.Entities.Booking, BookingDto>()
             .ForMember(d => d.RoomName, opt => opt.MapFrom(s => s.Room.Name));
     }
 }
