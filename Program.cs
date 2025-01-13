@@ -3,11 +3,13 @@ using ManagementSystem.Api.Endpoints.Booking;
 using ManagementSystem.Api.Endpoints.Room;
 using ManagementSystem.Api.Endpoints.User;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 {
     // Services
     builder.Services.AddOpenApi();
+    builder.Services.AddLogginExtension(builder.Host);
     builder.Services.AddDatabase(builder.Configuration);
     builder.Services.AddAuth(builder.Configuration);
     builder.Services.AddRepositories();
@@ -53,6 +55,7 @@ var app = builder.Build();
         });
     }
     
+    app.UseSerilogRequestLogging();
     app.UseCors("AllowAll");
     app.UseHttpsRedirection();
     app.UseAuthentication();
